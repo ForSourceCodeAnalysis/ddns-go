@@ -22,5 +22,6 @@ func GetConfigFilePathDefault() string {
 		// log.Println("Getting Home directory failed: ", err)
 		return "../.ddns_go_config.yaml"
 	}
+	//默认存放在运行当前命令的用户目录下
 	return dir + string(os.PathSeparator) + ".ddns_go_config.yaml"
 }

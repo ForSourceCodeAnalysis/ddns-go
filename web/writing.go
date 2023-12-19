@@ -63,7 +63,7 @@ func Writing(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	tmpl.Execute(writer, &writingData{
-		DnsConf:           template.JS(getDnsConfStr(conf.DnsConf)),
+		DnsConf:           template.JS(getDnsConfStr(conf.DnsConf)), //转换成template.JS
 		NotAllowWanAccess: BooltoOn(conf.NotAllowWanAccess),
 		User:              conf.User,
 		Webhook:           conf.Webhook,

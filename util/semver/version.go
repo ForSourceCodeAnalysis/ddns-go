@@ -32,7 +32,7 @@ func init() {
 // 无法解析该版本则返回错误。如果版本是类似于 SemVer 的版本，则会
 // 尝试将其转换为 SemVer。
 func NewVersion(v string) (*Version, error) {
-	m := versionRegex.FindStringSubmatch(v)
+	m := versionRegex.FindStringSubmatch(v) //查找匹配的字符串，会返回整体匹配，子匹配
 	if m == nil {
 		return nil, fmt.Errorf("%s 不是有效的语义化版本", v)
 	}
@@ -40,12 +40,13 @@ func NewVersion(v string) (*Version, error) {
 	sv := &Version{}
 
 	var err error
+	//m[0]是整体匹配，m[1]是第一个子匹配，也就是主版本
 	sv.major, err = strconv.ParseUint(m[1], 10, 64)
 	if err != nil {
 		return nil, fmt.Errorf("解析版本号时出错：%s", err)
 	}
 
-	if m[2] != "" {
+	if m[2] != "" { //次要版本
 		sv.minor, err = strconv.ParseUint(strings.TrimPrefix(m[2], "."), 10, 64)
 		if err != nil {
 			return nil, fmt.Errorf("解析版本号时出错：%s", err)

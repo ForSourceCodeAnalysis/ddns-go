@@ -28,7 +28,12 @@ var (
 		porkbunEndpoint,
 		tencentCloudEndPoint,
 	}
-
+	// 这种形式不是很好，有两个问题
+	// 1. ip4和ip6以数组的形式表示意义不是很明确，改为结构体可能更好些
+	// []struct{
+	//		ipv4,ipv6 util.IpCache,
+	// }
+	// 2. Ipcache 里面的元素顺序和addresses是一一对应的，不够灵活，修改成以dns服务商名字为键名的map结构是否更好些？
 	Ipcache = [][2]util.IpCache{}
 )
 
@@ -45,6 +50,7 @@ func RunTimer(delay time.Duration) {
 // RunOnce RunOnce
 func RunOnce() {
 	conf, err := config.GetConfigCached()
+	//如果没有通过页面配置过，这里会直接返回
 	if err != nil {
 		return
 	}

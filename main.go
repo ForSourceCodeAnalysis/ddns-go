@@ -21,8 +21,13 @@ import (
 	"github.com/kardianos/service"
 )
 
+//定义了一些命令行参数，这里可以学习到flag包的用法
+//对于一些小型项目，直接定义会比较方便，如果是一些命令比较多或参数比较多的项目，可以使用
+//spf13/cobra，这是一个专门用于开发命令行应用的SDK
+
 // ddns-go 版本
 // ddns-go version
+// 注意和BoolVar的区别，BoolVar会直接将参数绑定到指定的变量上；这里会返回存储了参数值的地址
 var versionFlag = flag.Bool("v", false, "ddns-go 版本")
 
 // 更新 ddns-go
@@ -41,6 +46,7 @@ var ipCacheTimes = flag.Int("cacheTimes", 5, "间隔N次与服务商比对")
 var serviceType = flag.String("s", "", "服务管理, 支持install, uninstall, restart")
 
 // 配置文件路径
+// 这里调用了方法获取默认配置文件路径
 var configFilePath = flag.String("c", util.GetConfigFilePathDefault(), "自定义配置文件路径")
 
 // Web 服务
@@ -62,11 +68,13 @@ var faviconEmbeddedFile embed.FS
 var version = "DEV"
 
 func main() {
-	flag.Parse()
-	if *versionFlag {
+	flag.Parse() //解析命令行参数
+	//版本查询
+	if *versionFlag { //上面介绍了，flag.Bool()返回的是地址，所以这里要用指针访问
 		fmt.Println(version)
 		return
 	}
+	//升级
 	if *updateFlag {
 		update.Self(version)
 		return
@@ -138,6 +146,7 @@ func run() {
 }
 
 func staticFsFunc(writer http.ResponseWriter, request *http.Request) {
+	//静态文件服务
 	http.FileServer(http.FS(staticEmbeddedFiles)).ServeHTTP(writer, request)
 }
 

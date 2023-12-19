@@ -21,8 +21,10 @@ func newNetResolver(s string) *net.Resolver {
 	}
 
 	return &net.Resolver{
+		//两者都配置的情况下，会优先使用Dial里面的配置
 		PreferGo: true,
 		Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
+			//注意这里的实现
 			return net.Dial("udp", s)
 		},
 	}

@@ -17,6 +17,7 @@ var defaultTransport = &http.Transport{
 	// from http.DefaultTransport
 	Proxy: http.ProxyFromEnvironment,
 	DialContext: func(ctx context.Context, network, address string) (net.Conn, error) {
+		//注意这里的实现
 		return dialer.DialContext(ctx, network, address)
 	},
 	ForceAttemptHTTP2:     true,

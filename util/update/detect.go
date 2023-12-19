@@ -47,6 +47,7 @@ func findAssetForArch(arch string, rel *Release,
 	// 从 release 列表中查找最新的版本。
 	// GitHub API 返回的列表按照创建日期的顺序排列。
 	if a, v, ok := findAssetFromRelease(rel, getSuffixes(arch)); ok {
+		//这段代码有点看不懂，release是上面定义的，且未赋值过，肯定是nil，所以这个条件一定成立
 		if release == nil || v.GreaterThan(version) {
 			version = v
 			asset = a

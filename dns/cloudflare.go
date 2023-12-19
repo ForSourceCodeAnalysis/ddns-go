@@ -18,8 +18,8 @@ const (
 
 // Cloudflare Cloudflare实现
 type Cloudflare struct {
-	DNS     config.DNS
-	Domains config.Domains
+	DNS     config.DNS     //dns服务商认证信息，apikey,apisecret这些
+	Domains config.Domains //dns record
 	TTL     int
 }
 

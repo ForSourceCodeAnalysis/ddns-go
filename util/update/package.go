@@ -34,6 +34,7 @@ func Self(version string) {
 		return
 	}
 
+	//找到当前运行中的ddns-go的执行路径
 	exe, err := os.Executable()
 	if err != nil {
 		log.Printf("找不到可执行路径：%v", err)
@@ -63,6 +64,7 @@ func to(assetURL, assetFileName, cmdPath string) error {
 
 func downloadAssetFromURL(url string) (rc io.ReadCloser, err error) {
 	client := util.CreateHTTPClient()
+	//这里直接使用http请求获取，对于小文件比较方便
 	resp, err := client.Get(url)
 	if err != nil {
 		return nil, fmt.Errorf("从 %s 下载 release 失败：%v", url, err)

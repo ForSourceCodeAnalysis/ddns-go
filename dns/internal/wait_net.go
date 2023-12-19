@@ -20,6 +20,8 @@ func WaitForNetworkConnected(addresses []string) {
 
 	for {
 		for _, addr := range addresses {
+			//这一步仅仅是为了验证是否能正常连接各dns服务提供商的服务，返回的结果不会处理
+			//且只要任一个连接成功就返回
 			// https://github.com/jeessy2/ddns-go/issues/736
 			client := util.CreateHTTPClient()
 			resp, err := client.Get(addr)
